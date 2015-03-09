@@ -42,7 +42,7 @@ function duplicate_post_plugin_upgrade() {
 			$role = get_role($name);
 			if(!empty($role)) $role->add_cap( 'copy_posts' );
 		}
-			
+
 		add_option('duplicate_post_copyexcerpt','1');
 		add_option('duplicate_post_copyattachments','0');
 		add_option('duplicate_post_copychildren','0');
@@ -143,8 +143,8 @@ function duplicate_post_add_duplicate_post_button() {
 /**
  * Connect actions to functions
  */
-add_action('admin_action_duplicate_post_save_as_new_post', 'duplicate_post_save_as_new_post');
-add_action('admin_action_duplicate_post_save_as_new_post_draft', 'duplicate_post_save_as_new_post_draft');
+add_action('admin_action_dp_duplicate_post_save_as_new_post', 'duplicate_post_save_as_new_post');
+add_action('admin_action_dp_duplicate_post_save_as_new_post_draft', 'duplicate_post_save_as_new_post_draft');
 
 /*
  * This function calls the creation of a new copy of the selected post (as a draft)
@@ -159,7 +159,7 @@ function duplicate_post_save_as_new_post_draft(){
  * then redirects to the post list
  */
 function duplicate_post_save_as_new_post($status = ''){
-	if (! ( isset( $_GET['post']) || isset( $_POST['post'])  || ( isset($_REQUEST['action']) && 'duplicate_post_save_as_new_post' == $_REQUEST['action'] ) ) ) {
+	if (! ( isset( $_GET['post']) || isset( $_POST['post'])  || ( isset($_REQUEST['action']) && 'dp_duplicate_post_save_as_new_post' == $_REQUEST['action'] ) ) ) {
 		wp_die(__('No post to duplicate has been supplied!', DUPLICATE_POST_I18N_DOMAIN));
 	}
 
@@ -199,7 +199,7 @@ function duplicate_post_get_current_user() {
 	} else {
 		$user_login = $_COOKIE[USER_COOKIE];
 		$sql = $wpdb->prepare("SELECT * FROM $wpdb->users WHERE user_login=%s", $user_login);
-		$current_user = $wpdb->get_results($sql);			
+		$current_user = $wpdb->get_results($sql);
 		return $current_user;
 	}
 }
